@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{title}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>{title}</h1>
+    <p>Welcome to {title}
+
+{#posts}
+    <form method="post" action="/edited/{_id}" enctype="multipart/form-data">
+      <input type="text" name="head" value="{head}"><br>
+      <textarea name="bodyck">{body}</textarea><br>
+      <input type="text" name="category" value="{category}"><br>
+      <input type="text" name="author" value="{author}"><br>
+      <input type="file" name="mainimage"><br>
+      {/posts}
+      <input type="submit"  value="Post">
+    </form>
+
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script>
+    			CKEDITOR.replace( 'bodyck' );
+    </script>
+  </body>
+</html>
