@@ -1,0 +1,107 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>{+title /}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/dashboard.css" rel="stylesheet">
+	<link href="/stylesheets/form-validation.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="/dashboard/addpost">
+                 <span data-feather="file-text"></span>
+                  Posts
+                </a>
+              </li>
+
+
+              <li class="nav-item">
+                <a class="nav-link" href="/dashboard/profile">
+                  <span data-feather="users"></span>
+                  Profile
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/dashboard/category">
+                  <span data-feather="layers"></span>
+                  Category
+                </a>
+              </li>
+            </ul>
+
+
+          </div>
+        </nav>
+
+
+        {+body /}
+
+        </main>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
+   <script src="/js/popper.min.js"></script>
+   <script src="/js/bootstrap.min.js"></script>
+
+   <!-- Icons -->
+   <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+   <script>
+     feather.replace()
+   </script>
+
+
+   <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
+   <script src="/js/holder.min.js"></script>
+   <script>
+     // Example starter JavaScript for disabling form submissions if there are invalid fields
+     (function() {
+       'use strict';
+
+       window.addEventListener('load', function() {
+         // Fetch all the forms we want to apply custom Bootstrap validation styles to
+         var forms = document.getElementsByClassName('needs-validation');
+
+         // Loop over them and prevent submission
+         var validation = Array.prototype.filter.call(forms, function(form) {
+           form.addEventListener('submit', function(event) {
+             if (form.checkValidity() === false) {
+               event.preventDefault();
+               event.stopPropagation();
+             }
+             form.classList.add('was-validated');
+           }, false);
+         });
+       }, false);
+     })();
+   </script>
+
+ </body>
+</html>

@@ -1,0 +1,108 @@
+{>"layouts/layout" /}
+{<title}New Post{/title}
+{<body}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Add A New Post</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+
+
+            </div>
+          </div>
+          {#messages /}
+          {#errors}
+          <div class="error">
+          {msg}
+          </div>
+          {/errors}
+<div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your Posts</span>
+            <span class="badge badge-secondary badge-pill">{posts.length}</span>
+          </h4>
+          <ul class="list-group mb-3">
+          {#posts}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{head}</h6>
+                <small class="text-muted">{author}</small>
+              </div>
+              <span class="text-muted">Edit | <a href="/delete/post/{_id}">Delete</a></span>
+            </li>
+            {/posts}
+
+          </ul>
+
+
+        </div>
+        <div class="col-md-8 order-md-1">
+
+          <form method="post" action="/add/post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="firstName" name="head" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  Title is required.
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+            <div class="mb-3">
+              <label for="body">Body</label>
+			  <textarea class="form-control" id="address" name="bodyck" required> </textarea>
+              <div class="invalid-feedback">
+                Please enter Body Text.
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label for="category">Category</label>
+                <select class="custom-select d-block w-100" name="category" id="country" required>
+                  <option value="">Choose...</option>
+                  {#category}
+                  <option>{title}</option>
+                  {/category}
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid Category.
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="author">Author</label>
+                <select class="custom-select d-block w-100" name="author" id="state" required>
+                  <option value="">Choose...</option>
+                  {#blogger}
+                  <option>{username}</option>
+                  {/blogger}
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a Author.
+                </div>
+              </div>
+
+
+            </div>
+			 <div class="mb-3">
+              <label for="image">Profile Image</label>
+              <input type="file" name="mainimage" class="form-control">
+
+            </div>
+
+            <hr class="mb-4">
+			<input type="submit" value="submit" class="btn btn-primary btn-lg btn-block">
+
+          </form>
+        </div>
+      </div>
+      {/body}
