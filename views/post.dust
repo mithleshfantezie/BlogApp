@@ -1,51 +1,9 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <title>{title}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>{title}</h1>
-    <p>Welcome to {title}</p>
 
-
-    {#posts}
-    <div class="onepost">
-      <div id="head"> {head} </div>
-      <div id="blogimg"><img id="blogim" src=" /images/uploads/{mainimage}" alt=""></div>
-      <div id="body"> {body|s} </div>
-      <div id="footnote">| <a href="/{category}">{category}</a> | By {author}. {date}</div>
-
-    </div>
-    {/posts}
-<br>
-Comments:
-<hr>
-{#posts}
-{#comments}
-Name: {name} <br>
-Comment: {comment}<br><br>
-<hr>
-{/comments}
-{/posts}
-
-
-    <form method="post" action="/post/{posts._id}/comment">
-      <input type="text" name="name" placeholder="Name..."><br>
-      <input type="text" name="email" placeholder="Email..."><br>
-      <input type="text" name="comment" placeholder="Comments..."><br>
-      <input type="submit"  value="Post">
-    </form>
-
-
-
-  </body>
-</html> -->
 
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title>TITLE</title>
+	<title>{title}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
@@ -119,7 +77,7 @@ Comment: {comment}<br><br>
 							<div class="post-info">
 
 								<div class="left-area">
-									<a class="avatar" href="#"><img src="images/avatar-1-120x120.jpg" alt="Profile Image"></a>
+									<a class="avatar" ><img src="/images/uploads/{blogger[0].profileimg}" alt="Profile Image"></a>
 								</div>
 
 								<div class="middle-area">
@@ -131,7 +89,8 @@ Comment: {comment}<br><br>
 
 
 						</div><!-- post-top-area -->
-
+            <br>
+            <br>
 						<div class="post-image"><img src="/images/uploads/{mainimage}" alt="Blog Image"></div>
 
 						<div class="post-bottom-area">
@@ -163,7 +122,7 @@ Comment: {comment}<br><br>
 							<div class="post-footer post-info">
 
 								<div class="left-area">
-									<a class="avatar" href="#"><img src="images/avatar-1-120x120.jpg" alt="Profile Image"></a>
+									<a class="avatar" ><img src="/images/uploads/{blogger[0].profileimg}" alt="Profile Image"></a>
 								</div>
 
 								<div class="middle-area">
@@ -193,7 +152,7 @@ Comment: {comment}<br><br>
 
 							<div class="blog-image"><img src="/images/uploads/{mainimage}" alt="Blog Image"></div>
 
-							<a class="avatar" href="#"><img src="images/icons8-team-355979.jpg" alt="Profile Image"></a>
+							<a class="avatar" ><img src="/images/uploads/{blogger[0].profileimg}" alt="Profile Image"></a>
 
 							<div class="blog-info">
 
@@ -286,7 +245,7 @@ Comment: {comment}<br><br>
           {/comments}
           {/posts}
 
-					<a class="more-comment-btn" href="#"><b>VIEW MORE COMMENTS</a>
+					<!-- <a class="more-comment-btn" href="#"><b>VIEW MORE COMMENTS</a> -->
 
 				</div><!-- col-lg-8 col-md-12 -->
 
@@ -304,14 +263,13 @@ Comment: {comment}<br><br>
 					<div class="footer-section">
 
 						<a class="logo" href="#"><img src="images/logo.png" alt="Logo Image"></a>
-						<p class="copyright">Bona @ 2017. All rights reserved.</p>
-						<p class="copyright">Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+						<p class="copyright">{blogger[0].username}  2017. All rights reserved.</p>
+						<p class="copyright">Developed by {blogger[0].username}</a></p>
 						<ul class="icons">
-							<li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
-							<li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
-							<li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-							<li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
-							<li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
+							<li><a href="{blogger[0].fbid}"><i class="ion-social-facebook-outline"></i></a></li>
+							<li><a href="{blogger[0].twitterid}"><i class="ion-social-twitter-outline"></i></a></li>
+							<li><a href="{blogger[0].instaid}"><i class="ion-social-instagram-outline"></i></a></li>
+
 						</ul>
 
 					</div><!-- footer-section -->
@@ -320,16 +278,12 @@ Comment: {comment}<br><br>
 				<div class="col-lg-4 col-md-6">
 						<div class="footer-section">
 						<h4 class="title"><b>CATAGORIES</b></h4>
-						<ul>
-							<li><a href="#">BEAUTY</a></li>
-							<li><a href="#">HEALTH</a></li>
-							<li><a href="#">MUSIC</a></li>
+						<ul class="tags">
+							{#category}
+							<li><a href="/{title}">{title}</a></li>
+							{/category}
 						</ul>
-						<ul>
-							<li><a href="#">SPORT</a></li>
-							<li><a href="#">DESIGN</a></li>
-							<li><a href="#">TRAVEL</a></li>
-						</ul>
+
 					</div><!-- footer-section -->
 				</div><!-- col-lg-4 col-md-6 -->
 
