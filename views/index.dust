@@ -36,16 +36,16 @@
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
 			<ul class="main-menu visible-on-click" id="main-menu">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Categories</a></li>
-				<li><a href="#">Features</a></li>
+				<li><a href="/">Home</a></li>
+
+				<li><a href="/users/signin">Log In</a></li>
 			</ul><!-- main-menu -->
 
 			<div class="src-area">
-				<form>
+				<!-- <form>
 					<button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
 					<input class="src-input" type="text" placeholder="Type of search">
-				</form>
+				</form> -->
 			</div>
 
 		</div><!-- conatiner -->
@@ -114,9 +114,9 @@
 							</div>
 
 							<ul class="post-footer">
-								<li><a href="#"><i class="ion-heart"></i>57</a></li>
-								<li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
-								<li><a href="#"><i class="ion-eye"></i>138</a></li>
+								<li><a ><i class="ion-heart"></i>57</a></li>
+								<li><a ><i class="ion-chatbubble"></i>6</a></li>
+								<li><a ><i class="ion-eye"></i>138</a></li>
 							</ul>
 
 						</div><!-- single-post -->

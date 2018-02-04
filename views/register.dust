@@ -1,0 +1,26 @@
+{>"layouts/form" /}
+{<title}Register{/title}
+{<body}
+{#messages /}
+{#errors}
+<div class="error">
+{msg}
+</div>
+{/errors}
+
+<form method="post" action="/users/register" class="form-login">
+
+<h2>Register!</h2>
+  <h6>Please Enter the following detail to create a Account.</h6>
+  <label>Username</label>
+  <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+  <label>Password</label>
+  <input type="password" name="password" class="form-control" placeholder="Password" required>
+<br>
+<input type="submit" value="SignUp" class="btn btn-lg btn-primary btn-block">
+  
+
+</form>
+
+
+{/body}

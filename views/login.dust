@@ -1,0 +1,28 @@
+{>"layouts/form" /}
+{<title}Sign In{/title}
+{<body}
+{#messages /}
+{#errors}
+<div class="error">
+{msg}
+</div>
+{/errors}
+
+<form method="post" action="/users/login" class="form-login">
+
+	  <h2>Hello!</h2>
+      <h6>Please Sign in into Your Account.</h6>
+      <label>Username</label>
+      <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+      <label>Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" name="rememberme" value="remember-me"> Remember me
+        </label>
+      </div>
+      <input type="submit" value="Log In" class="btn btn-lg btn-primary btn-block">
+
+    </form>
+
+{/body}

@@ -11,6 +11,9 @@ var dust = require('dustjs-helpers');
 var flash = require('connect-flash');
 var session = require('express-session');
 var expressValidator = require('express-validator');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcryptjs');
 
 
 var multer  = require('multer')
@@ -47,6 +50,9 @@ app.use(session({
   saveUninitialized: true
 
 }));
+//middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //connect-flash middleware
 app.use(require('connect-flash')());

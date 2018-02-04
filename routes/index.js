@@ -65,19 +65,19 @@ Posts.find().then((posts)=>{
 
 
 
-router.get('/dashboard/profile',(req,res)=>{
+router.get('/dashboard/profile',ensureAuthenticated,(req,res)=>{
   res.render('profile');
 });
 
-router.get('/dashboard/addpost',(req,res)=>{
+router.get('/dashboard/addpost',ensureAuthenticated,(req,res)=>{
 
 
   Posts.find().then((posts)=>{
-    Category.find().then((category)=>{
+    Category.find().then((categorys)=>{
       Blogger.find().then((blogger)=>{
         res.render('addpost',{
           posts,
-          category,
+          categorys,
           blogger
         });
       },(e)=>{
@@ -97,7 +97,7 @@ router.get('/dashboard/addpost',(req,res)=>{
 
 });
 
-router.get('/dashboard/category',(req,res)=>{
+router.get('/dashboard/category',ensureAuthenticated,(req,res)=>{
   Category.find().then((categories)=>{
       res.render('category',{
         categories
@@ -108,6 +108,13 @@ router.get('/dashboard/category',(req,res)=>{
 
 
 });
+
+function ensureAuthenticated(req, res , next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/users/signin');
+}
 
 router.get('/post/:id',(req,res)=>{
   var id = req.params.id;
@@ -400,13 +407,13 @@ Posts.findById(id).then((posts)=>{
 });
 });
 
-router.post('/edited/:id',upload.single('mainimage'),(req,res)=>{
+router.post('/edit/post/:id',upload.single('mmainimage'),(req,res)=>{
 
   var id = req.params.id;
-  var head=  req.body.head;
-  var body= req.body.bodyck;
-  var category=  req.body.category;
-  var author= req.body.author;
+  var head=  req.body.mhead;
+  var body= req.body.mbodyck;
+  var category=  req.body.mcategory;
+  var author= req.body.mauthor;
 
   if(!ObjectID.isValid(id)){
     res.status(400).send();
@@ -420,8 +427,20 @@ router.post('/edited/:id',upload.single('mainimage'),(req,res)=>{
     var mainimage = 'noimage.jpg';
 
   }
+  req.checkBody("mhead", "Enter a Title .").trim().notEmpty();
+  // req.checkBody("body", 'Enter the Body Part.').trim().notEmpty();
+  req.checkBody("mcategory", "Select a valid Category.").trim().notEmpty();
+  req.checkBody("mauthor", "Select Author Name.").trim().notEmpty();
+
+  var errors = req.validationErrors();
 
 
+
+
+
+
+
+    if (!errors) {
 
   Posts.findByIdAndUpdate(id,{ $set:
     {
@@ -436,12 +455,40 @@ router.post('/edited/:id',upload.single('mainimage'),(req,res)=>{
 
         return res.status(404).send();
       }
-
-
+req.flash('success','Post has been Modified.');
+res.redirect('/dashboard/addpost');
     }).catch((e)=>{
       res.status(400).send();
     });
-    res.redirect('/');
+  } else {
+    Posts.find().then((posts)=>{
+      Category.find().then((categorys)=>{
+        Blogger.find().then((blogger)=>{
+          res.render('addpost',{
+            title: 'Dashboad | Add Post',
+            posts,
+            categorys,
+            blogger,
+            errors
+          });
+        },(e)=>{
+          res.status(400).send(e);
+        });
+
+      },(e)=>{
+        res.status(400).send(e);
+      });
+
+
+
+
+    },(e)=>{
+      res.status(400).send(e);
+    });
+
+
+  }
+
 });
 
 router.get('/delete/post/:id',(req,res)=> {
@@ -482,6 +529,65 @@ router.get('/delete/category/:id',(req,res)=>{
     });
     req.flash('success','Category has been Deleted.');
     res.redirect('/dashboard/category');
+});
+
+router.post('/edit/category/:id',upload.single('cimagem'),(req,res)=>{
+  var id = req.params.id;
+  var title= req.body.mtitle;
+
+  if(req.file){
+    var cimage = req.file.filename;
+
+  }else {
+    var cimage = 'noimage.jpg';
+
+  }
+
+  req.checkBody("mtitle", "Enter a Title .").trim().notEmpty();
+
+
+  var errors = req.validationErrors();
+
+
+
+
+
+
+
+    if (!errors) {
+
+Category.findByIdAndUpdate(id,{ $set: {
+  title: title,
+  cimage: cimage
+
+}
+}, {new: true}).then((posts)=>{
+    if(!posts){
+
+      return res.status(404).send();
+    }
+    req.flash('success','Category has been Modified.');
+    res.redirect('/dashboard/category');
+
+  }).catch((e)=>{
+    res.status(400).send();
+  });
+} else {
+  Category.find().then((categories)=>{
+      res.render('category',{
+        title: 'Dashboard | Category',
+        categories,
+        errors
+      });
+  },(e)=>{
+    res.status(404).send(e);
+  });
+
+
+  }
+
+
+
 });
 
 module.exports = router;
