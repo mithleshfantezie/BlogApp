@@ -336,16 +336,29 @@ router.post('/add/profileinformation',upload.single('profileimg'),(req,res)=>{
 
 
 if(!errors){
-Blogger.update({},{$set: {
-  firstname: firstname,
-  lastname: lastname,
-  username: username,
-  email: email,
-  fbid: fbid,
-  instaid: instaid,
-  twitterid: twitterid,
-  profileimg: profileimg
-  }}, {new: true}).then((upload)=>{
+// Blogger.update({},{$set: {
+//   firstname: firstname,
+//   lastname: lastname,
+//   username: username,
+//   email: email,
+//   fbid: fbid,
+//   instaid: instaid,
+//   twitterid: twitterid,
+//   profileimg: profileimg
+//   }}, {new: true}).then((upload)=>{
+
+var blogger = new Blogger({
+    firstname: firstname,
+    lastname: lastname,
+    username: username,
+    email: email,
+    fbid: fbid,
+    instaid: instaid,
+    twitterid: twitterid,
+    profileimg: profileimg
+});
+
+blogger.save().then((doc)=>{
        req.flash('success', 'Profile Information has been added.');
        res.redirect('/dashboard/profile');
   },(e)=>{
