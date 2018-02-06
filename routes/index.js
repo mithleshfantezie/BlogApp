@@ -31,6 +31,7 @@ var {mongoose} = require('./../db/mongoose');
 var {Posts} = require('./../models/posts');
 var {Category} = require('./../models/category');
 var {Blogger} = require('./../models/blogger');
+var {Others} = require('./../models/others');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -38,11 +39,13 @@ router.get('/', function(req, res, next) {
 Posts.find().then((posts)=>{
   Category.find().then((category)=>{
     Blogger.find().then((blogger)=>{
+      Others.find().then((others)=>{
       res.render('index', {
         title: 'Blog | Page',
         posts,
         category,
-        blogger
+        blogger,
+        others
       });
     },(e)=>{
       res.status(400).send(e);
@@ -51,6 +54,9 @@ Posts.find().then((posts)=>{
   },(e)=>{
     res.status(400).send(e);
   });
+},(e)=>{
+  res.status(400).send(e);
+});
 
 
 
@@ -62,11 +68,125 @@ Posts.find().then((posts)=>{
 
 });
 
+//Others
+
+router.post('/add/thought',(req,res)=>{
+  var thought = req.body.thought;
+
+  req.checkBody('thought','Please Enter the Text.').trim().notEmpty();
+
+  var errors= req.validationErrors();
+
+  if(!errors){
+    Others.update({},{$set: {
+      thought: thought
+    }}, {new: true}).then((upload)=>{
+         req.flash('success', 'Thought has been added.');
+         res.redirect('/dashboard/others');
+    },(e)=>{
+    res.status(400).send(e);
+    });
+  }else{
+    res.render('others', {
+      title: 'Dashboad | Others',
+      errors
+    });
+  }
+});
+
+router.post('/add/logo',upload.single('logo'),(req,res)=>{
+  if(req.file){
+    var logo = req.file.filename;
+
+  }else {
+    var logo = 'noimage.jpg';
+
+  }
 
 
+
+
+    Others.update({},{$set: {
+      logo: logo
+    }}, {new: true}).then((logo)=>{
+         req.flash('success', 'Logo has been added.');
+         res.redirect('/dashboard/others');
+    },(e)=>{
+    res.status(400).send(e);
+    });
+
+});
+
+router.post('/add/banner',upload.single('banner'),(req,res)=>{
+  if(req.file){
+    var banner = req.file.filename;
+
+  }else {
+    var banner = 'noimage.jpg';
+
+  }
+
+
+
+
+    Others.update({},{$set: {
+      banner: banner
+    }}, {new: true}).then((data)=>{
+         req.flash('success', 'Banner has been added.');
+         res.redirect('/dashboard/others');
+    },(e)=>{
+    res.status(400).send(e);
+    });
+
+});
+
+router.post('/shop',(req,res)=>{
+  var shop = req.body.shop;
+
+  req.checkBody('shop','Please choose from the list.').notEmpty();
+
+  var errors= req.validationErrors();
+
+  if(!errors){
+    Others.update({},{$set: {
+      shop: shop
+    }}, {new: true}).then((upload)=>{
+         req.flash('success', 'Added Successfully.');
+         res.redirect('/dashboard/others');
+    },(e)=>{
+    res.status(400).send(e);
+    });
+  }else{
+    res.render('others', {
+      title: 'Dashboad | Others',
+      errors
+    });
+  }
+});
+
+// Others............
 
 router.get('/dashboard/profile',ensureAuthenticated,(req,res)=>{
-  res.render('profile');
+  Blogger.find().then((blogger)=>{
+    res.render('profile',{
+      title: 'Dashboad | Profile',
+      blogger
+    });
+  },(e)=>{
+    res.status(400).send(e);
+  });
+
+});
+
+router.get('/dashboard/others',ensureAuthenticated,(req,res)=>{
+  Blogger.find().then((blogger)=>{
+  res.render('others',{
+    title: 'Dashboad | Others',
+    blogger
+  });
+},(e)=>{
+  res.status(400).send(e);
+});
 });
 
 router.get('/dashboard/addpost',ensureAuthenticated,(req,res)=>{
@@ -99,9 +219,16 @@ router.get('/dashboard/addpost',ensureAuthenticated,(req,res)=>{
 
 router.get('/dashboard/category',ensureAuthenticated,(req,res)=>{
   Category.find().then((categories)=>{
+      Blogger.find().then((blogger)=>{
       res.render('category',{
-        categories
+        title: 'Dashboad | Category',
+        categories,
+        blogger
       });
+    },(e)=>{
+      res.status(400).send(e);
+    });
+
   },(e)=>{
     res.status(404).send(e);
   });
@@ -204,20 +331,21 @@ router.post('/add/profileinformation',upload.single('profileimg'),(req,res)=>{
 
   var errors = req.validationErrors();
 
+
+
+
+
 if(!errors){
-  var blogger = new Blogger({
-    firstname: firstname,
-    lastname: lastname,
-    username: username,
-    email: email,
-    fbid: fbid,
-    instaid: instaid,
-    twitterid: twitterid,
-    profileimg: profileimg
-
-  });
-
-  blogger.save().then((doc)=>{
+Blogger.update({},{$set: {
+  firstname: firstname,
+  lastname: lastname,
+  username: username,
+  email: email,
+  fbid: fbid,
+  instaid: instaid,
+  twitterid: twitterid,
+  profileimg: profileimg
+  }}, {new: true}).then((upload)=>{
        req.flash('success', 'Profile Information has been added.');
        res.redirect('/dashboard/profile');
   },(e)=>{
@@ -377,16 +505,37 @@ Posts.findByIdAndUpdate(id, {$push: {
 });
 
 router.get('/:category',(req,res)=>{
-  var category= req.params.category;
-  Posts.find({category: category}).then((posts)=>{
-    res.render('index', {
-      title: 'Comment',
-      posts
-   });
+  var Categorys= req.params.category;
 
-  },(e)=>{
-    res.status(400).send(e);
-  });
+    Posts.find({category: Categorys}).then((posts)=>{
+      Category.find().then((category)=>{
+        Blogger.find().then((blogger)=>{
+        Others.find().then((others)=>{
+          res.render('search', {
+            title: `Filter | ${Categorys}`,
+            posts,
+            category,
+            blogger,
+            others
+          });
+        },(e)=>{
+          res.status(400).send(e);
+        });
+      },(e)=>{
+        res.status(400).send(e);
+      });
+
+      },(e)=>{
+        res.status(400).send(e);
+      });
+
+
+
+
+    },(e)=>{
+      res.status(400).send(e);
+    });
+
 });
 
 router.get('/edit/:id',(req,res)=>{

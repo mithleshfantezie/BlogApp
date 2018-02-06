@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Category = mongoose.model('Category',{
   title: {
     type: String,
-    trime: true
+    trim: true
   },
   cimage: {
     type: String

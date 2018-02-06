@@ -1,8 +1,14 @@
 {>"layouts/layout" /}
 {<title}Category{/title}
 {<body}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Others Information</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
 
 
+            </div>
+          </div>
 
           {#messages /}
           {#errors}
@@ -10,41 +16,95 @@
           {msg}
           </div>
           {/errors}
-		  <div class="row">
+          <div class="row">
 
-        <div class="col-md-8 order-md-1">
+           <div class="col-md-8 order-md-1">
+   		 <h4 class="d-flex justify-content-between align-items-center mb-3">
+               <span class="text-muted">Today's Thought</span>
 
-
-            <form class="card p-2">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Promo code">
-                          <div class="input-group-append">
-                            <button type="submit" class="btn btn-secondary">Redeem</button>
-                          </div>
-                        </div>
-                      </form>
+             </h4>
 
 
+             <form method="post" action="/add/thought" class="card p-2">
+               <div class="input-group">
+                 <input type="text" name="thought" class="form-control">
+                 <div class="input-group-append">
+                 <input type="submit" value="Save" class="btn btn-secondary">
+
+                 </div>
+               </div>
+             </form>
+
+           </div>
+
+
+   		 <div class="col-md-8 order-md-1">
+   		 <br>
+   		 <h4 class="d-flex justify-content-between align-items-center mb-3">
+
+               <span class="text-muted">Logo</span>
+
+             </h4>
+
+
+             <form method="post" action="/add/logo" enctype="multipart/form-data" class="card p-2">
+               <div class="input-group">
+                 <input type="file"  name="logo" class="form-control">
+                 <div class="input-group-append">
+                  <input type="submit" value="Upload" class="btn btn-secondary">
+                 </div>
+               </div>
+             </form>
+
+           </div>
+
+   			 <div class="col-md-8 order-md-1">
+   		 <br>
+   		 <h4 class="d-flex justify-content-between align-items-center mb-3">
+
+               <span class="text-muted">Single Post Banner</span>
+
+             </h4>
+
+
+             <form method="post" action="/add/banner" enctype="multipart/form-data" class="card p-2">
+               <div class="input-group">
+                 <input type="file"  name="banner" class="form-control">
+                 <div class="input-group-append">
+                  <input type="submit" value="Upload" class="btn btn-secondary">
+                 </div>
+               </div>
+             </form>
+
+           </div>
+
+   			 <div class="col-md-8 order-md-1">
+   		 <br>
+   		 <h4 class="d-flex justify-content-between align-items-center mb-3">
+
+               <span class="text-muted">Shop </span>
+
+             </h4>
+
+
+             <form method="post" action="/shop" class="card p-2">
+               <div class="input-group">
+                 <select  name="shop" required>
+                               <option value="">Choose...</option>
+                               <option>Open</option>
+   							               <option>Closed</option>
+                             </select>
+
+                 <div class="input-group-append">
+
+   				<input type="submit" value="Save" class="btn btn-secondary">
+                 </div>
+               </div>
+             </form>
+
+           </div>
+         </div>
 
 
 
-
-
-
-            <div class="row">
-
-
-
-            </div>
-			 <div class="mb-3">
-              <label for="image">Category Image</label>
-              <input type="file" class="form-control" name="cimage" >
-
-            </div>
-
-            <hr class="mb-4">
-			<input type="submit" value="submit" class="btn btn-primary btn-lg btn-block">
-
-          </form>
-        </div>
-      </div>
+         {/body}

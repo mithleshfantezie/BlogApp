@@ -31,7 +31,8 @@ var Blogger = mongoose.model('Blogger',{
   },
   username: {
     type: String,
-    trim: true
+    trim: true,
+    
   }
 
 });

@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
-
+	<link rel="icon" href="/images/favicon.ico">
 
 	<!-- Font -->
 
@@ -31,22 +31,22 @@
 	<header>
 		<div class="container-fluid position-relative no-side-padding">
 
-			<a href="#" class="logo"><img src="images/logo.png" alt="Logo Image"></a>
+			<a href="#" class="logo"><img src="/images/uploads/{others[0].logo}" alt="Logo Image"></a>
 
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
 			<ul class="main-menu visible-on-click" id="main-menu">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Categories</a></li>
-				<li><a href="#">Features</a></li>
+				<li><a href="/">Home</a></li>
+
+				<li><a href="/users/signin">Log In</a></li>
 			</ul><!-- main-menu -->
 
-			<div class="src-area">
+			<!-- <div class="src-area">
 				<form>
 					<button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
 					<input class="src-input" type="text" placeholder="Type of search">
 				</form>
-			</div>
+			</div> -->
 
 		</div><!-- conatiner -->
 	</header>
@@ -106,7 +106,7 @@
 
 							<div class="post-icons-area">
 								<ul class="post-icons">
-									<li><a href="#"><i class="ion-heart"></i>{likes}</a></li>
+									<li><a href="/like"><i class="ion-heart"></i>{likes}</a></li>
 									<li><a href="#"><i class="ion-chatbubble"></i>{posts.comments.length}</a></li>
 									<li><i class="ion-eye"></i>&nbsp;{views}</li>
 								</ul>
@@ -159,9 +159,9 @@
 								<h4 class="title"><a href="/post/{_id}"><b>{head}</b></a></h4>
 
 								<ul class="post-footer">
-									<li><a href="#"><i class="ion-heart"></i>{likes}</a></li>
-									<li><a href="#"><i class="ion-chatbubble"></i>{comments.length}</a></li>
-									<li><a href="#"><i class="ion-eye"></i>&nbsp;{views}</a></li>
+									<li><a href="/post/{_id}"><i class="ion-heart"></i>{likes}</a></li>
+									<li><a href="/post/{_id}"><i class="ion-chatbubble"></i>{comments.length}</a></li>
+									<li><a href="/post/{_id}"><i class="ion-eye"></i>&nbsp;{views}</a></li>
 								</ul>
 
 							</div><!-- blog-info -->
@@ -262,7 +262,7 @@
 				<div class="col-lg-4 col-md-6">
 					<div class="footer-section">
 
-						<a class="logo" href="#"><img src="images/logo.png" alt="Logo Image"></a>
+						<a class="logo" ><img src="/images/uploads/{others[0].logo}" alt="Logo Image"></a>
 						<p class="copyright">{blogger[0].username}  2017. All rights reserved.</p>
 						<p class="copyright">Developed by {blogger[0].username}</a></p>
 						<ul class="icons">
@@ -278,9 +278,11 @@
 				<div class="col-lg-4 col-md-6">
 						<div class="footer-section">
 						<h4 class="title"><b>CATAGORIES</b></h4>
-						<ul class="tags">
+						<ul>
 							{#category}
-							<li><a href="/{title}">{title}</a></li>
+							<li style="padding: 7px 10px; margin-bottom: 10px; margin-right: 10px; float: left;
+								border: 1px solid #ddd; background: #ddd;
+									" ><a href="/{title}">{title}</a></li>
 							{/category}
 						</ul>
 
