@@ -268,6 +268,7 @@ Posts.findById(id).then((posts)=>{
     Blogger.find().then((blogger)=>{
       Posts.find().limit(3).then((allposts)=>{
         Category.find().then((category)=>{
+          Others.find().then((others)=>{
           if(!posts){
             return res.status(404).send();
           }
@@ -276,9 +277,12 @@ Posts.findById(id).then((posts)=>{
             posts,
             allposts,
             blogger,
-            category
+            category,
+            others
           });
-
+        },(e)=>{
+          res.status(400).send(e);
+        });
         },(e)=>{
           res.status(400).send(e);
         });
