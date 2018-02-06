@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/register',(req,res)=>{
+router.get('/new/user/register',(req,res)=>{
   res.render('register');
 });
 
@@ -66,7 +66,7 @@ passport.deserializeUser(function(id, done) {
 
 
 
-router.post('/new/user/register', function(req, res, next) {
+router.post('/register', function(req, res, next) {
 
   var username = req.body.username;
   var password = req.body.password;
