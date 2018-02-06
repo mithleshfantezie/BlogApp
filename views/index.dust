@@ -10,7 +10,7 @@
 	<!-- Font -->
 
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 	<!-- Stylesheets -->
 
@@ -186,7 +186,7 @@
 
 						<a class="logo" ><img src="/images/uploads/{others[0].logo}" alt="Logo Image"></a>
 						<p class="copyright">{blogger[0].username} @ 2017. All rights reserved.</p>
-						<p class="copyright">Developed by {blogger[0].username}</p>
+						<p class="copyright"><i class="fas fa-code"></i> with <i class="fas fa-heartbeat"></i> by {blogger[0].username}</p>
 						<ul class="icons">
 							<li><a href="{blogger[0].fbid}"><i class="ion-social-facebook-outline"></i></a></li>
 							<li><a href="{blogger[0].twitterid}"><i class="ion-social-twitter-outline"></i></a></li>
