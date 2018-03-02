@@ -35,6 +35,43 @@ h4{ font-size: 1.2em; }
 h5{ font-size: 1.1em; }
 h6{ font-size: .9em; letter-spacing: 1px; }
 
+.box {
+margin:20px;
+height:180px;
+width:180px;
+border:1px solid pink;
+border-radius:5px 5px 5px 5px;
+}
+#line {
+height:40px;
+width:auto;
+border-bottom:1px solid pink;
+padding:2px;
+}
+
+#inside {
+font-family:"Arial";
+font-size:20px;
+font-weight:bold;
+color:pink;
+text-align: center;
+
+padding-bottom:2px;
+padding-top:10px;
+
+}
+#no {
+text-align: center;
+height:auto;
+width:auto;
+
+font-family:"Arial";
+font-size:80px;
+font-weight:bold;
+color:pink;
+padding-top:25px;
+}
+
 a, button{ display: inline-block; text-decoration: none; color: inherit; transition: all .3s; }
 
 a:focus, a:active, a:hover,

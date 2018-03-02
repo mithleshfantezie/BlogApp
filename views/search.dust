@@ -31,7 +31,7 @@
 	<header>
 		<div class="container-fluid position-relative no-side-padding">
 
-			<a  class="logo"><img src="/images/uploads/{others[0].logo}" alt="Logo Image"></a>
+			<a  class="logo"><img src="{others[0].logoimg}" alt="Logo Image"></a>
 
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
@@ -60,7 +60,7 @@
 {#category}
 				<div class="swiper-slide">
 					<a class="slider-category" href="#">
-						<div class="blog-image"><img src="/images/uploads/{cimage}" alt="Blog Image"></div>
+						<div class="blog-image"><img src="{cimg}" alt="Blog Image"></div>
 
 						<div class="category">
 							<div class="display-table center-text">
@@ -113,7 +113,7 @@
 								</ul>
 
 									<div class="avatar-area">
-										<a class="avatar"  ><img src="/images/uploads/{blogger[0].profileimg}" alt="Profile Image"></a>
+										<a class="avatar"  ><img src="{blogger[0].profileimage}" alt="Profile Image"></a>
 										<div class="right-area">
 											<a class="name" ><b>{author}</b></a>
 											<h6 class="date" >{date}</h6>
@@ -150,7 +150,7 @@
 				<div class="col-lg-4 col-md-6">
 					<div class="footer-section">
 
-						<a class="logo" ><img src="/images/uploads/{others[0].logo}" alt="Logo Image"></a>
+						<a class="logo" ><img src="{others[0].logoimg}" alt="Logo Image"></a>
 						<p class="copyright">{blogger[0].username} @ 2017. All rights reserved.</p>
 						<p class="copyright"><span style="font-size:20px;"><i class="fas fa-code"></i></span> with <span style="color: red;"> <i class="fas fa-heartbeat"></i></span> by {blogger[0].username}</p>
 						<ul class="icons">

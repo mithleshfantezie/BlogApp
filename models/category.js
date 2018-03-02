@@ -5,7 +5,10 @@ var Category = mongoose.model('Category',{
     type: String,
     trim: true
   },
-  cimage: {
+  cimg: {
+    type: String
+  },
+  imagename: {
     type: String
   }
 });

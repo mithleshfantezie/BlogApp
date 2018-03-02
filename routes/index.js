@@ -25,6 +25,19 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
+
+var Promise = require('bluebird');
+var GoogleCloudStorage = Promise.promisifyAll(require('@google-cloud/storage'));
+
+var storage = GoogleCloudStorage({
+projectId: 'mithlexh001',
+keyFilename: 'privatekey.json'
+});
+
+var BUCKET_NAME = 'mithlexh001.appspot.com';
+// https://googlecloudplatform.github.io/google-cloud-node/#/docs/google-cloud/0.39.0/storage/bucket
+var myBucket = storage.bucket(BUCKET_NAME);
+
 var moment = require('moment');
 var {ObjectID} = require('mongodb');
 var {mongoose} = require('./../db/mongoose');
@@ -102,12 +115,21 @@ router.post('/add/logo',upload.single('logo'),(req,res)=>{
     var logo = 'noimage.jpg';
 
   }
+  let localFileLocation = `./public/images/uploads/${logo}`;
+  myBucket.uploadAsync(localFileLocation, { public: true })
+    .then(file => {
+      // file saved
+      console.log('Done');
+    });
+
+    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${logo}`
 
 
 
 
     Others.update({},{$set: {
-      logo: logo
+      logoimg: url,
+      imagename: logo
     }}, {new: true}).then((logo)=>{
          req.flash('success', 'Logo has been added.');
          res.redirect('/dashboard/others');
@@ -126,11 +148,19 @@ router.post('/add/banner',upload.single('banner'),(req,res)=>{
 
   }
 
+  let localFileLocation = `./public/images/uploads/${banner}`;
+  myBucket.uploadAsync(localFileLocation, { public: true })
+    .then(file => {
+      // file saved
+      console.log('Done');
+    });
 
+    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${banner}`
 
 
     Others.update({},{$set: {
-      banner: banner
+      bannerimg: url,
+      imagename: banner
     }}, {new: true}).then((data)=>{
          req.flash('success', 'Banner has been added.');
          res.redirect('/dashboard/others');
@@ -323,6 +353,36 @@ router.post('/add/profileinformation',upload.single('profileimg'),(req,res)=>{
     var profileimg = 'noimage.jpg';
 
   }
+
+  var file = myBucket.file('pic.jpg')
+file.existsAsync()
+  .then(exists => {
+    if (exists) {
+      // file exists in bucket
+    }
+  })
+  .catch(err => {
+     return err
+  })
+
+
+// upload file to bucket
+// https://googlecloudplatform.github.io/google-cloud-node/#/docs/google-cloud/0.39.0/storage/bucket?method=upload
+let localFileLocation = `./public/images/uploads/${profileimg}`;
+myBucket.uploadAsync(localFileLocation, { public: true })
+  .then(file => {
+    // file saved
+    console.log('Done');
+  });
+
+  var url = `https://storage.googleapis.com/${BUCKET_NAME}/${profileimg}`
+
+
+
+
+
+
+
   req.checkBody("firstname", "Enter the FirstName .").trim().notEmpty();
   req.checkBody("lastname", "Enter the LastName .").trim().notEmpty();
   req.checkBody("email", "Enter the email address .").trim().notEmpty();
@@ -348,7 +408,8 @@ Blogger.update({},{$set: {
   fbid: fbid,
   instaid: instaid,
   twitterid: twitterid,
-  profileimg: profileimg
+  profileimage: url,
+  imagename: profileimg
   }}, {new: true}).then((upload)=>{
        req.flash('success', 'Profile Information has been added.');
        res.redirect('/dashboard/profile');
@@ -379,7 +440,14 @@ router.post('/add/category',upload.single('cimage'),(req,res)=>{
 
   var errors = req.validationErrors();
 
+  let localFileLocation = `./public/images/uploads/${cimage}`;
+  myBucket.uploadAsync(localFileLocation, { public: true })
+    .then(file => {
+      // file saved
+      console.log('Done');
+    });
 
+    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${cimage}`
 
 
 
@@ -389,7 +457,8 @@ router.post('/add/category',upload.single('cimage'),(req,res)=>{
 
   var category = new Category({
     title: title,
-    cimage: cimage
+    cimg: url,
+    imagename: cimage
   });
 
   category.save().then((doc)=>{
@@ -437,7 +506,14 @@ req.checkBody("author", "Select Author Name.").trim().notEmpty();
 
 var errors = req.validationErrors();
 
+let localFileLocation = `./public/images/uploads/${mainimage}`;
+myBucket.uploadAsync(localFileLocation, { public: true })
+  .then(file => {
+    // file saved
+    console.log('Done');
+  });
 
+  var url = `https://storage.googleapis.com/${BUCKET_NAME}/${mainimage}`
 
 
 
@@ -452,7 +528,8 @@ var errors = req.validationErrors();
       likes: likes,
       views: views,
       date: date,
-      mainimage: mainimage
+      img: url,
+      imagename: mainimage
     });
 
     posts.save().then((doc)=>{
@@ -587,7 +664,14 @@ router.post('/edit/post/:id',upload.single('mmainimage'),(req,res)=>{
 
   var errors = req.validationErrors();
 
+  let localFileLocation = `./public/images/uploads/${mainimage}`;
+  myBucket.uploadAsync(localFileLocation, { public: true })
+    .then(file => {
+      // file saved
+      console.log('Done');
+    });
 
+    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${mainimage}`
 
 
 
@@ -601,7 +685,8 @@ router.post('/edit/post/:id',upload.single('mmainimage'),(req,res)=>{
     body: body,
     category: category,
     author: author,
-    mainimage: mainimage
+    mainimg: url,
+    imagename: mainimage
     }
   }, {new: true}).then((posts)=>{
       if(!posts){
@@ -656,6 +741,18 @@ router.get('/delete/post/:id',(req,res)=> {
         return res.status(404).send();
       }
 
+      const filename = `${posts.imagename}`;
+
+      // Deletes the file from the bucket
+    myBucket
+        .file(filename)
+        .delete()
+        .then(() => {
+          console.log(`${filename} deleted.`);
+        })
+        .catch(err => {
+          console.error('ERROR:', err);
+        });
 
     }).catch((e)=>{
       res.status(400).send();
@@ -675,7 +772,19 @@ router.get('/delete/category/:id',(req,res)=>{
       if(!category){
         return res.status(404).send();
       }
+      // const bucketName = 'Name of a bucket, e.g. my-bucket';
+      const filename = `${category.imagename}`;
 
+      // Deletes the file from the bucket
+myBucket
+        .file(filename)
+        .delete()
+        .then(() => {
+          console.log(`${filename} deleted.`);
+        })
+        .catch(err => {
+          console.error('ERROR:', err);
+        });
 
     }).catch((e)=>{
       res.status(400).send();
@@ -701,7 +810,14 @@ router.post('/edit/category/:id',upload.single('cimagem'),(req,res)=>{
 
   var errors = req.validationErrors();
 
+  let localFileLocation = `./public/images/uploads/${cimage}`;
+  myBucket.uploadAsync(localFileLocation, { public: true })
+    .then(file => {
+      // file saved
+      console.log('Done');
+    });
 
+    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${cimage}`
 
 
 
@@ -711,7 +827,8 @@ router.post('/edit/category/:id',upload.single('cimagem'),(req,res)=>{
 
 Category.findByIdAndUpdate(id,{ $set: {
   title: title,
-  cimage: cimage
+  cimg: url,
+  imagename: cimage
 
 }
 }, {new: true}).then((posts)=>{

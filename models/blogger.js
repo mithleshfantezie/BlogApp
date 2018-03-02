@@ -26,13 +26,16 @@ var Blogger = mongoose.model('Blogger',{
     type: String,
     trim: true
   },
-  profileimg: {
+  profileimage: {
+    type: String
+  },
+  imagename: {
     type: String
   },
   username: {
     type: String,
     trim: true,
-    
+
   }
 
 });

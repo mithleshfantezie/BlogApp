@@ -27,7 +27,10 @@ var Posts = mongoose.model('Posts',{
   date: {
     type: String
   },
-  mainimage: {
+  img: {
+    type: String
+  },
+  imagename: {
     type: String
   },
   comments: {

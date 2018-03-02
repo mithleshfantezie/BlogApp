@@ -6,10 +6,10 @@ var Others = mongoose.model('Others',{
     default: 'Enter Thought',
     trim: true
   },
-  logo: {
+  logoimg: {
     type: String
   },
-  banner: {
+  bannerimg: {
     type: String
   },
   shop: {
