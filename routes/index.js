@@ -110,19 +110,20 @@ router.post('/add/thought',(req,res)=>{
 router.post('/add/logo',upload.single('logo'),(req,res)=>{
   if(req.file){
     var logo = req.file.filename;
+    let localFileLocation = `./public/images/uploads/${logo}`;
+    myBucket.uploadAsync(localFileLocation, { public: true })
+      .then(file => {
+        // file saved
+        console.log('Done');
+      });
+
+      var url = `https://storage.googleapis.com/${BUCKET_NAME}/${logo}`
+
 
   }else {
     var logo = 'noimage.jpg';
 
   }
-  let localFileLocation = `./public/images/uploads/${logo}`;
-  myBucket.uploadAsync(localFileLocation, { public: true })
-    .then(file => {
-      // file saved
-      console.log('Done');
-    });
-
-    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${logo}`
 
 
 
@@ -143,19 +144,21 @@ router.post('/add/banner',upload.single('banner'),(req,res)=>{
   if(req.file){
     var banner = req.file.filename;
 
+    let localFileLocation = `./public/images/uploads/${banner}`;
+    myBucket.uploadAsync(localFileLocation, { public: true })
+      .then(file => {
+        // file saved
+        console.log('Done');
+      });
+
+      var url = `https://storage.googleapis.com/${BUCKET_NAME}/${banner}`
+
+
   }else {
     var banner = 'noimage.jpg';
 
   }
 
-  let localFileLocation = `./public/images/uploads/${banner}`;
-  myBucket.uploadAsync(localFileLocation, { public: true })
-    .then(file => {
-      // file saved
-      console.log('Done');
-    });
-
-    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${banner}`
 
 
     Others.update({},{$set: {
@@ -354,16 +357,16 @@ router.post('/add/profileinformation',upload.single('profileimg'),(req,res)=>{
 
   }
 
-  var file = myBucket.file('pic.jpg')
-file.existsAsync()
-  .then(exists => {
-    if (exists) {
-      // file exists in bucket
-    }
-  })
-  .catch(err => {
-     return err
-  })
+//   var file = myBucket.file('pic.jpg')
+// file.existsAsync()
+//   .then(exists => {
+//     if (exists) {
+//       // file exists in bucket
+//     }
+//   })
+//   .catch(err => {
+//      return err
+//   })
 
 
 // upload file to bucket
@@ -508,20 +511,21 @@ req.checkBody("author", "Select Author Name.").trim().notEmpty();
 
 var errors = req.validationErrors();
 
-let localFileLocation = `./public/images/uploads/${mainimage}`;
-myBucket.uploadAsync(localFileLocation, { public: true })
-  .then(file => {
-    // file saved
-    console.log('Done');
-  });
-
-  var url = `https://storage.googleapis.com/${BUCKET_NAME}/${mainimage}`
 
 
 
 
 
   if (!errors) {
+    let localFileLocation = `./public/images/uploads/${mainimage}`;
+    myBucket.uploadAsync(localFileLocation, { public: true })
+      .then(file => {
+        // file saved
+        console.log('Done');
+      });
+
+      var url = `https://storage.googleapis.com/${BUCKET_NAME}/${mainimage}`
+
     var posts = new Posts({
       head: head,
       body: body,
@@ -666,20 +670,21 @@ router.post('/edit/post/:id',upload.single('mmainimage'),(req,res)=>{
 
   var errors = req.validationErrors();
 
-  let localFileLocation = `./public/images/uploads/${mainimage}`;
-  myBucket.uploadAsync(localFileLocation, { public: true })
-    .then(file => {
-      // file saved
-      console.log('Done');
-    });
-
-    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${mainimage}`
 
 
 
 
 
     if (!errors) {
+      let localFileLocation = `./public/images/uploads/${mainimage}`;
+      myBucket.uploadAsync(localFileLocation, { public: true })
+        .then(file => {
+          // file saved
+          console.log('Done');
+        });
+
+        var url = `https://storage.googleapis.com/${BUCKET_NAME}/${mainimage}`
+
 
   Posts.findByIdAndUpdate(id,{ $set:
     {
@@ -812,20 +817,21 @@ router.post('/edit/category/:id',upload.single('cimagem'),(req,res)=>{
 
   var errors = req.validationErrors();
 
-  let localFileLocation = `./public/images/uploads/${cimage}`;
-  myBucket.uploadAsync(localFileLocation, { public: true })
-    .then(file => {
-      // file saved
-      console.log('Done');
-    });
 
-    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${cimage}`
 
 
 
 
 
     if (!errors) {
+      let localFileLocation = `./public/images/uploads/${cimage}`;
+      myBucket.uploadAsync(localFileLocation, { public: true })
+        .then(file => {
+          // file saved
+          console.log('Done');
+        });
+
+        var url = `https://storage.googleapis.com/${BUCKET_NAME}/${cimage}`
 
 Category.findByIdAndUpdate(id,{ $set: {
   title: title,
