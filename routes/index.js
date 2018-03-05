@@ -368,15 +368,6 @@ file.existsAsync()
 
 // upload file to bucket
 // https://googlecloudplatform.github.io/google-cloud-node/#/docs/google-cloud/0.39.0/storage/bucket?method=upload
-let localFileLocation = `./public/images/uploads/${profileimg}`;
-myBucket.uploadAsync(localFileLocation, { public: true })
-  .then(file => {
-    // file saved
-    console.log('Done');
-  });
-
-  var url = `https://storage.googleapis.com/${BUCKET_NAME}/${profileimg}`
-
 
 
 
@@ -400,6 +391,16 @@ myBucket.uploadAsync(localFileLocation, { public: true })
 
 
 if(!errors){
+  let localFileLocation = `./public/images/uploads/${profileimg}`;
+  myBucket.uploadAsync(localFileLocation, { public: true })
+    .then(file => {
+      // file saved
+      console.log('Done');
+    });
+
+    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${profileimg}`
+
+
 Blogger.update({},{$set: {
   firstname: firstname,
   lastname: lastname,
@@ -440,20 +441,21 @@ router.post('/add/category',upload.single('cimage'),(req,res)=>{
 
   var errors = req.validationErrors();
 
-  let localFileLocation = `./public/images/uploads/${cimage}`;
-  myBucket.uploadAsync(localFileLocation, { public: true })
-    .then(file => {
-      // file saved
-      console.log('Done');
-    });
-
-    var url = `https://storage.googleapis.com/${BUCKET_NAME}/${cimage}`
-
 
 
 
 
     if (!errors) {
+      let localFileLocation = `./public/images/uploads/${cimage}`;
+      myBucket.uploadAsync(localFileLocation, { public: true })
+        .then(file => {
+          // file saved
+          console.log('Done');
+        });
+
+        var url = `https://storage.googleapis.com/${BUCKET_NAME}/${cimage}`
+
+
 
   var category = new Category({
     title: title,
